@@ -17,14 +17,13 @@ class _SmokeAnimatedBackgroundState extends State<SmokeAnimatedBackground>
       vsync: this,
     );
     _gifController.repeat(
-        min: 0, max: 29, period: Duration(milliseconds: 1200));
+        min: 0, max: 75, period: Duration(milliseconds: 1200));
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
     return SizedBox.expand(
       child: ShaderMask(
         shaderCallback: (rect) {

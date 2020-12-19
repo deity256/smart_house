@@ -12,7 +12,7 @@ void main() {
     debugShowCheckedModeBanner: false,
     title: 'Smart House',
     theme: ThemeData(
-      primarySwatch: Colors.blue,
+      fontFamily: 'Proxima',
       visualDensity: VisualDensity.adaptivePlatformDensity,
     ),
     home: AirConditionerView(),
