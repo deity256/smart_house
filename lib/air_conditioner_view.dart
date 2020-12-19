@@ -21,7 +21,9 @@ class _AirConditionerViewState extends State<AirConditionerView> {
     return Scaffold(
       body: Stack(
         children: [
-          SmokeAnimatedBackground(),
+          SmokeAnimatedBackground(
+            currentTempValueOfOne: _temprature,
+          ),
           Padding(
             padding: EdgeInsets.only(
               top: MediaQuery.of(context).padding.top + 24,
@@ -50,7 +52,7 @@ class _AirConditionerViewState extends State<AirConditionerView> {
                             'Smart AC',
                             style: TextStyle(
                                 fontSize: size.width / 18,
-                                color: AppColors.blackColor,
+                                color: AppColors.black,
                                 fontWeight: FontWeight.w600),
                           ),
                         ),
@@ -76,7 +78,7 @@ class _AirConditionerViewState extends State<AirConditionerView> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 16, horizontal: 16),
                           decoration: BoxDecoration(
-                            color: AppColors.blackColor.withOpacity(0.2),
+                            color: AppColors.black.withOpacity(0.2),
                             borderRadius:
                                 BorderRadius.circular(size.width / 24),
                           ),
@@ -87,7 +89,7 @@ class _AirConditionerViewState extends State<AirConditionerView> {
                                 'Temp',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w600,
-                                  color: AppColors.whiteColor,
+                                  color: AppColors.white,
                                   fontSize: size.width / 20,
                                 ),
                               ),
@@ -99,15 +101,15 @@ class _AirConditionerViewState extends State<AirConditionerView> {
                                   Text(
                                     '16°C',
                                     style: TextStyle(
-                                      color: AppColors.whiteColor,
+                                      color: AppColors.white,
                                       fontSize: size.width / 24,
                                     ),
                                   ),
                                   Expanded(
                                     child: CustomSlider.Slider.adaptive(
-                                        activeColor: AppColors.whiteColor,
-                                        inactiveColor: AppColors.whiteColor
-                                            .withOpacity(0.4),
+                                        activeColor: AppColors.white,
+                                        inactiveColor:
+                                            AppColors.white.withOpacity(0.4),
                                         value: _temprature,
                                         onChanged: (value) {
                                           setState(() {
@@ -118,7 +120,7 @@ class _AirConditionerViewState extends State<AirConditionerView> {
                                   Text(
                                     '30°C',
                                     style: TextStyle(
-                                      color: AppColors.whiteColor,
+                                      color: AppColors.white,
                                       fontSize: size.width / 24,
                                     ),
                                   ),

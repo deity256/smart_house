@@ -6,7 +6,7 @@ import 'air_conditioner_view.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
-      statusBarColor: AppColors.transparentColor,
+      statusBarColor: AppColors.transparent,
       statusBarIconBrightness: Brightness.dark));
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,

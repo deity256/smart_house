@@ -8,12 +8,9 @@ class TempCirclePainter extends CustomPainter {
   final double currentTempValueOfOne;
   final double minValue;
   final double maxValue;
-  final AnimationController tempAnimationController;
+
   TempCirclePainter(
-      {this.tempAnimationController,
-      this.currentTempValueOfOne = 0,
-      this.minValue,
-      this.maxValue});
+      {this.currentTempValueOfOne = 0, this.minValue, this.maxValue});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -23,15 +20,13 @@ class TempCirclePainter extends CustomPainter {
             squareEdge / 2,
         -squareEdge / 4 * math.sin(currentTempValueOfOne * math.pi) +
             squareEdge / 2);
-    var currentColor = Tween<Color>(
-            begin: AppColors.darkPurple, end: Color.fromRGBO(177, 69, 55, 1))
-        .animate(tempAnimationController);
+    var currentColor = AppColors.lerpGradient(currentTempValueOfOne);
     //blur arc
     Paint blurPaint = Paint()
       ..strokeWidth = 28
       ..style = PaintingStyle.stroke
       ..imageFilter = ui.ImageFilter.blur(sigmaX: 30, sigmaY: 30)
-      ..color = AppColors.whiteColor;
+      ..color = AppColors.white;
     canvas.drawArc(Offset(squareEdge / 5.8, squareEdge / 5.8) & size / 1.525,
         math.pi * 0.12, 7, false, blurPaint);
 
@@ -39,7 +34,7 @@ class TempCirclePainter extends CustomPainter {
     Paint purplePaint = Paint()
       ..strokeWidth = 28
       ..style = PaintingStyle.stroke
-      ..color = AppColors.darkPurple;
+      ..color = currentColor;
     canvas.drawArc(
         Offset(squareEdge / 5.8, squareEdge / 5.8) & size / 1.525,
         math.pi,
@@ -52,25 +47,25 @@ class TempCirclePainter extends CustomPainter {
       ..strokeWidth = 32
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
-      ..color = AppColors.darkPurple
-      ..imageFilter = ui.ImageFilter.blur(sigmaX: 25, sigmaY: 20);
-    canvas.drawArc(Offset(squareEdge / 4.4, squareEdge / 4.2) & size / 1.9,
+      ..color = currentColor
+      ..imageFilter = ui.ImageFilter.blur(sigmaX: 22, sigmaY: 22);
+    canvas.drawArc(Offset(squareEdge / 4.7, squareEdge / 4.2) & size / 1.7,
         math.pi * 0.12, 2.5, false, shadowPaint);
 
-    Paint innerCirclePaint = Paint()..color = AppColors.whiteColor;
+    Paint innerCirclePaint = Paint()..color = AppColors.white;
     canvas.drawCircle(Offset(squareEdge / 2, squareEdge / 2), squareEdge / 3.4,
         innerCirclePaint);
 
-    Paint indecatorCirclePaint = Paint()..color = AppColors.darkPurple;
+    Paint indecatorCirclePaint = Paint()..color = currentColor;
     canvas.drawCircle(_currentPostion, 5, indecatorCirclePaint);
 
     final tempTextStyle = TextStyle(
-      color: AppColors.blackColor,
-      fontWeight: FontWeight.w600,
+      color: AppColors.black,
+      fontWeight: FontWeight.bold,
       fontSize: squareEdge / 7,
     );
     final unitTextStyle = TextStyle(
-      color: AppColors.blackColor,
+      color: AppColors.black,
       fontSize: squareEdge / 16,
     );
     final textSpan = TextSpan(
