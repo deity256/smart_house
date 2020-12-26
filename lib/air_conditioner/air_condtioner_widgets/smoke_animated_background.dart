@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gifimage/flutter_gifimage.dart';
 import 'package:smart_house/colors.dart';
+import 'package:provider/provider.dart';
 
 class SmokeAnimatedBackground extends StatefulWidget {
-  final double currentTempValueOfOne;
-
-  const SmokeAnimatedBackground({Key key, this.currentTempValueOfOne})
-      : super(key: key);
+  const SmokeAnimatedBackground({
+    Key key,
+  }) : super(key: key);
   @override
   _SmokeAnimatedBackgroundState createState() =>
       _SmokeAnimatedBackgroundState();
@@ -17,17 +17,38 @@ class _SmokeAnimatedBackgroundState extends State<SmokeAnimatedBackground>
   GifController _gifController;
   @override
   void initState() {
+    var speed = context.read<ValueNotifier<int>>();
+    var power = context.read<ValueNotifier<bool>>();
+
     _gifController = GifController(
       vsync: this,
     );
-    _gifController.repeat(
-        min: 0, max: 75, period: Duration(milliseconds: 1200));
+
+    power.addListener(() {
+      if (power.value)
+        _gifController.repeat(
+            min: 0,
+            max: 75,
+            period: Duration(milliseconds: 4000 - 1000 * speed.value));
+      else
+        _gifController.stop();
+    });
+
+    speed.addListener(() {
+      if (power.value)
+        _gifController.repeat(
+            min: 0,
+            max: 75,
+            period: Duration(milliseconds: 4000 - 1000 * speed.value));
+    });
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var temp = context.watch<ValueNotifier<double>>();
+
     return SizedBox.expand(
       child: ShaderMask(
         shaderCallback: (rect) {
@@ -35,8 +56,8 @@ class _SmokeAnimatedBackgroundState extends State<SmokeAnimatedBackground>
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              AppColors.lightPurple,
-              AppColors.lerpGradient(widget.currentTempValueOfOne)
+              AppColors.white.withAlpha(200),
+              AppColors.lerpGradient(temp.value)
             ],
           ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
         },

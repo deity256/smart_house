@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:smart_house/colors.dart';
 
-import 'air_conditioner_view.dart';
+import 'air_conditioner/air_conditioner_view.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
