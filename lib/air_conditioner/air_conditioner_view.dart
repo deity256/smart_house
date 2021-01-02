@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'package:smart_house/colors.dart';
 
+import 'air_condtioner_widgets/modes_buttons.dart';
 import 'air_condtioner_widgets/smoke_animated_background.dart';
 import 'air_condtioner_widgets/speed_power_widget.dart';
 import 'air_condtioner_widgets/temp_circle_painter.dart';
@@ -70,6 +71,7 @@ class _AirConditionerViewState extends State<AirConditionerView> {
                       ),
                     ],
                   ),
+                  ModesButtons(),
                   Center(
                       child: AspectRatio(
                     aspectRatio: 1,

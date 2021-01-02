@@ -21,14 +21,6 @@ class TempCirclePainter extends CustomPainter {
         -squareEdge / 4 * math.sin(currentTempValueOfOne * math.pi) +
             squareEdge / 2);
     var currentColor = AppColors.lerpGradient(currentTempValueOfOne);
-    //blur arc
-    Paint blurPaint = Paint()
-      ..strokeWidth = 28
-      ..style = PaintingStyle.stroke
-      ..imageFilter = ui.ImageFilter.blur(sigmaX: 30, sigmaY: 30)
-      ..color = AppColors.white;
-    canvas.drawArc(Offset(squareEdge / 5.8, squareEdge / 5.8) & size / 1.525,
-        math.pi * 0.12, 7, false, blurPaint);
 
     //purple arc
     Paint purplePaint = Paint()
@@ -48,9 +40,18 @@ class TempCirclePainter extends CustomPainter {
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..color = currentColor
-      ..imageFilter = ui.ImageFilter.blur(sigmaX: 22, sigmaY: 22);
+      ..imageFilter = ui.ImageFilter.blur(sigmaX: 22, sigmaY: 33);
     canvas.drawArc(Offset(squareEdge / 4.7, squareEdge / 4.2) & size / 1.7,
         math.pi * 0.12, 2.5, false, shadowPaint);
+
+    //blur arc
+    Paint blurPaint = Paint()
+      ..strokeWidth = 28
+      ..style = PaintingStyle.stroke
+      ..maskFilter = MaskFilter.blur(BlurStyle.inner, 22)
+      ..color = AppColors.white.withOpacity(0.5);
+    canvas.drawArc(Offset(squareEdge / 5.8, squareEdge / 5.8) & size / 1.525,
+        math.pi * 0.12, 7, false, blurPaint);
 
     Paint innerCirclePaint = Paint()..color = AppColors.white;
     canvas.drawCircle(Offset(squareEdge / 2, squareEdge / 2), squareEdge / 3.4,
@@ -59,6 +60,7 @@ class TempCirclePainter extends CustomPainter {
     Paint indecatorCirclePaint = Paint()..color = currentColor;
     canvas.drawCircle(_currentPostion, 5, indecatorCirclePaint);
 
+    //temperature text
     final tempTextStyle = TextStyle(
       color: AppColors.black,
       fontWeight: FontWeight.bold,
@@ -81,10 +83,7 @@ class TempCirclePainter extends CustomPainter {
       text: textSpan,
       textDirection: TextDirection.ltr,
     );
-    // textPainter.setPlaceholderDimensions([
-    //   PlaceholderDimensions(
-    //       alignment: ui.PlaceholderAlignment.top, size: Size(24, 24))
-    // ]);
+
     textPainter.layout(
       minWidth: 0,
       maxWidth: size.width,

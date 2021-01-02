@@ -18,7 +18,9 @@ class SpeedButton extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-            border: isActive ? null : Border.all(color: AppColors.white),
+            border: isActive
+                ? null
+                : Border.all(color: AppColors.white.withOpacity(0.5)),
             color: isActive ? AppColors.white : AppColors.transparent,
             shape: BoxShape.circle),
         child: Text(

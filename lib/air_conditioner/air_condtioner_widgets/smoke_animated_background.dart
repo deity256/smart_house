@@ -24,26 +24,29 @@ class _SmokeAnimatedBackgroundState extends State<SmokeAnimatedBackground>
       vsync: this,
     );
 
+    //listen to power switch
     power.addListener(() {
       if (power.value)
         _gifController.repeat(
             min: 0,
-            max: 75,
-            period: Duration(milliseconds: 4000 - 1000 * speed.value));
+            max: 59,
+            period: Duration(milliseconds: _speedFactor(speed)));
       else
         _gifController.stop();
     });
-
+    //listen to speed buttons
     speed.addListener(() {
       if (power.value)
         _gifController.repeat(
             min: 0,
-            max: 75,
-            period: Duration(milliseconds: 4000 - 1000 * speed.value));
+            max: 59,
+            period: Duration(milliseconds: _speedFactor(speed)));
     });
 
     super.initState();
   }
+
+  int _speedFactor(ValueNotifier<int> speed) => 3250 - (1000 * speed.value);
 
   @override
   Widget build(BuildContext context) {
@@ -53,20 +56,28 @@ class _SmokeAnimatedBackgroundState extends State<SmokeAnimatedBackground>
       child: ShaderMask(
         shaderCallback: (rect) {
           return LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              AppColors.white.withAlpha(200),
-              AppColors.lerpGradient(temp.value)
-            ],
-          ).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                AppColors.white.withOpacity(0.85),
+                AppColors.lerpGradient(temp.value)
+              ],
+              stops: [
+                0.01,
+                0.5
+              ]).createShader(Rect.fromLTRB(0, 0, rect.width, rect.height));
         },
         blendMode: BlendMode.screen,
-        child: GifImage(
-          fit: BoxFit.cover,
-          alignment: Alignment.center,
-          controller: _gifController,
-          image: AssetImage("assets/smoke_gif.gif"),
+        child: RotatedBox(
+          quarterTurns: 2,
+          child: GifImage(
+            fit: BoxFit.fill,
+            alignment: Alignment.center,
+            color: AppColors.white,
+            colorBlendMode: BlendMode.softLight,
+            controller: _gifController,
+            image: AssetImage("assets/smoke.gif"),
+          ),
         ),
       ),
     );
